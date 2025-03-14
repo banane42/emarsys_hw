@@ -20,11 +20,23 @@ public class IssueTracker {
 		int remainingTurnaroundDays = turnaroundDays % 5;
 		int remainingHours = turnaroundHours % 8;
 
-		// Check if the hours will put us on an invalid day
+		dueDate = dueDate.plusWeeks(turnaroundWeeks);
+
+		int days_remaining_in_week = DayOfWeek.FRIDAY.getValue() - dueDate.getDayOfWeek().getValue();
+		dueDate = dueDate.plusDays(days_remaining_in_week);
+		remainingTurnaroundDays -= days_remaining_in_week;
+
+		if (invalidWeekday(dueDate.plusDays(remainingTurnaroundDays).toLocalDate())) {
+			dueDate = dueDate.plusDays(2);
+		}
+
+		dueDate = dueDate.plusDays(remainingTurnaroundDays);
+
+		// Check if the hours will put us after hours
 		if (afterWorkHours(dueDate.plusHours(remainingHours).toLocalTime())) {
 			int hoursDiff = dueDate.plusHours(remainingHours).getHour() - pmTime.getHour();
 			dueDate = LocalDateTime.of(
-				submissionDate.plusDays(1).toLocalDate(), 
+				dueDate.plusDays(1).toLocalDate(), 
 				LocalTime.of(
 					9 + hoursDiff,
 					dueDate.getMinute()
@@ -43,18 +55,6 @@ public class IssueTracker {
 			int days_advanced = 8 - dueDate.getDayOfWeek().getValue();
 			dueDate = dueDate.plusDays(days_advanced);
 		}
-
-		dueDate = dueDate.plusWeeks(turnaroundWeeks);
-
-		int days_remaining_in_week = DayOfWeek.FRIDAY.getValue() - dueDate.getDayOfWeek().getValue();
-		dueDate = dueDate.plusDays(days_remaining_in_week);
-		remainingTurnaroundDays -= days_remaining_in_week;
-
-		if (invalidWeekday(dueDate.plusDays(remainingTurnaroundDays).toLocalDate())) {
-			dueDate = dueDate.plusDays(2);
-		}
-
-		dueDate = dueDate.plusDays(remainingTurnaroundDays);
 
 		return dueDate;
 	}

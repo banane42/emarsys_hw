@@ -217,7 +217,23 @@ public class IssueTrackerTest {
 		}
 	}
 
-	@Test public void nextWeekBigTickOverAndSomeDueDate() {
+
+	@Test public void nextWeekBiiigTickOverAndSomeDueDate() {
+		// Submitted Wednesday MAR 12 at 3pm
+		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 15, 0);
+		int turnaround = 75; // 9 days 3 hours
+		// Expected on Mon MAR 25 at 12 pm
+		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.MARCH, 26, 10, 0);
+
+		try {
+			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
+			assertEquals(expectedDueDate, dueDate);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+	}
+
+	@Test public void nextWeekTickOverAndSomeDueDate() {
 		// Submitted Wednesday MAR 12 at 12pm
 		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 12, 0);
 		int turnaround = 30; // 3 days 6 hours
@@ -231,4 +247,36 @@ public class IssueTrackerTest {
 			fail(e.toString());
 		}
 	}
+
+	@Test public void nextMonthTickOverDueDate() {
+		// Submitted Wednesday MAR 12 at 12pm
+		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 12, 0);
+		int turnaround = 120; // 15 days 0 hours
+		// Expected on Mon April 2 at 12 pm
+		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.APRIL, 2, 12, 0);
+
+		try {
+			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
+			assertEquals(expectedDueDate, dueDate);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+	}
+
+	@Test public void nextMonthTickOverAndSomeDueDate() {
+		// Submitted Wednesday MAR 12 at 12pm
+		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 12, 0);
+		int turnaround = 126; // 15 days 6 hours
+		// Expected on Mon April 2 at 12 pm
+		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.APRIL, 3, 10, 0);
+
+		try {
+			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
+			assertEquals(expectedDueDate, dueDate);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+	}
+
+
 }
