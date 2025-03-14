@@ -1,5 +1,6 @@
 package org.gjmorris;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -24,4 +25,35 @@ public class IssueTrackerTest {
 			fail(e.toString());
 		}
 	}
+
+	@Test(expected=IssueTracker.WorkTimeException.class)
+	public void catchSaturdaySumbissionDays() throws IssueTracker.WorkTimeException {
+		LocalDateTime saturdaySubmission = LocalDateTime.of(2025, Month.MARCH, 8, 9, 0);
+		issueTracker.calculateDueDate(saturdaySubmission, 8);
+	}
+
+	@Test(expected=IssueTracker.WorkTimeException.class)
+	public void catchSundaySumbissionDays() throws IssueTracker.WorkTimeException {
+		LocalDateTime sundaySubmission = LocalDateTime.of(2025, Month.MARCH, 9, 9, 0);
+		issueTracker.calculateDueDate(sundaySubmission, 8);
+	}
+
+	@Test public void validWorkdaySubmission() {
+		try {
+			for (int i = DayOfWeek.MONDAY.ordinal(); i < DayOfWeek.SATURDAY.ordinal(); i++) {
+				LocalDateTime submissionDate = LocalDateTime.of(
+					2025, 
+					Month.MARCH, 
+					3 + i, 
+					9, 
+					0
+				);
+				issueTracker.calculateDueDate(submissionDate, 8);
+			}
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+	}
+
+
 }
