@@ -55,5 +55,51 @@ public class IssueTrackerTest {
 		}
 	}
 
+	@Test public void catchInvalidAMSubmissionTime() throws IssueTracker.WorkTimeException {
+		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 4, 8, 59);
+		try {
+			issueTracker.calculateDueDate(submission, 8);
+		} catch (IssueTracker.WorkTimeException e) {
+			return;
+		}
+
+		fail("Should have thrown WorkTime Exceptions");
+	}
+
+	@Test public void catchInvalidPMSubmissionTime() {
+		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 4, 17, 1);
+		try {
+			issueTracker.calculateDueDate(submission, 8);
+		} catch (IssueTracker.WorkTimeException e) {
+			System.out.println(e.toString());
+			return;
+		}
+
+		fail("Should have thrown WorkTime Exceptions");
+	}
+
+	@Test public void checkValidSubmissionTimes() {
+		LocalDateTime amSubmission = LocalDateTime.of(2025, Month.MARCH, 4, 9, 0);
+		try {
+			issueTracker.calculateDueDate(amSubmission, 8);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+
+		LocalDateTime noonSubmission = LocalDateTime.of(2025, Month.MARCH, 4, 12, 0);
+		try {
+			issueTracker.calculateDueDate(noonSubmission, 8);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+
+		LocalDateTime pmSubmission = LocalDateTime.of(2025, Month.MARCH, 4, 17, 0);
+		try {
+			issueTracker.calculateDueDate(pmSubmission, 8);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+	}
+
 
 }
