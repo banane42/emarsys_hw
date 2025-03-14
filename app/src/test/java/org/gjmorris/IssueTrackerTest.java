@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -110,7 +111,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
@@ -123,7 +124,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
@@ -136,6 +137,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
+			assertEquals(expectedDueDate, dueDate);
 			assert(dueDate.compareTo(expectedDueDate) == 0);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
@@ -149,7 +151,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
@@ -164,7 +166,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
@@ -179,7 +181,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
@@ -194,7 +196,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
@@ -209,7 +211,7 @@ public class IssueTrackerTest {
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
-			assert(dueDate.compareTo(expectedDueDate) == 0);
+			assertEquals(expectedDueDate, dueDate);
 		} catch (IssueTracker.WorkTimeException e) {
 			fail(e.toString());
 		}
