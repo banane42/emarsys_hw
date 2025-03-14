@@ -190,9 +190,24 @@ public class IssueTrackerTest {
 	@Test public void nextWeekBigTickOverDueDate() {
 		// Submitted Wednesday MAR 12 at 12pm
 		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 12, 0);
-		int turnaround = 16; // 3 days 0 hours
+		int turnaround = 24; // 3 days 0 hours
 		// Expected on Mon MAR 17 at 12 pm
-		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.MARCH, 18, 12, 0);
+		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.MARCH, 17, 12, 0);
+
+		try {
+			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
+			assertEquals(expectedDueDate, dueDate);
+		} catch (IssueTracker.WorkTimeException e) {
+			fail(e.toString());
+		}
+	}
+
+	@Test public void nextWeekBiiigTickOverDueDate() {
+		// Submitted Wednesday MAR 12 at 12pm
+		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 12, 0);
+		int turnaround = 72; // 9 days 0 hours
+		// Expected on Mon MAR 25 at 12 pm
+		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.MARCH, 25, 12, 0);
 
 		try {
 			LocalDateTime dueDate = issueTracker.calculateDueDate(submission, turnaround);
@@ -205,7 +220,7 @@ public class IssueTrackerTest {
 	@Test public void nextWeekBigTickOverAndSomeDueDate() {
 		// Submitted Wednesday MAR 12 at 12pm
 		LocalDateTime submission = LocalDateTime.of(2025, Month.MARCH, 12, 12, 0);
-		int turnaround = 22; // 3 days 6 hours
+		int turnaround = 30; // 3 days 6 hours
 		// Expected on Tuesday MAR 18 at 10 am
 		LocalDateTime expectedDueDate = LocalDateTime.of(2025, Month.MARCH, 18, 10, 0);
 
