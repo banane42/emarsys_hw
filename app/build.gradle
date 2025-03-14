@@ -29,8 +29,7 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-
-application {
-    // Define the main class for the application.
-    mainClass = 'org.gjmorris.App'
-}
+// application {
+//     // Define the main class for the application.
+//     mainClass = 'org.gjmorris.App'
+// }
