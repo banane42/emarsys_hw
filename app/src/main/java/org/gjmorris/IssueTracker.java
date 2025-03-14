@@ -11,7 +11,13 @@ public class IssueTracker {
 
 	public LocalDateTime calculateDueDate(LocalDateTime submissionDate , int turnaroundHours) throws WorkTimeException {
 		validateSubmissionDate(submissionDate);
-		return null;
+
+		int turnaroundDays = turnaroundHours / 8;
+		int remainingHours = turnaroundHours % 8;
+
+		LocalDateTime dueDate = submissionDate.plusDays(turnaroundDays).plusHours(remainingHours);
+
+		return dueDate;
 	}
 
 	private void validateSubmissionDate(LocalDateTime date) throws WorkTimeException {
@@ -20,11 +26,9 @@ public class IssueTracker {
 		}
 
 		if (date.toLocalTime().isBefore(amTime)) {
-			System.out.println("Before AM");
 			throw new WorkTimeException("Date: " + date + " was submitted outside work hours.\nExpected time between 9AM - 5 PM, recieved " + date.toLocalTime());
 		}
 		if (date.toLocalTime().isAfter(pmTime)) {
-			System.out.println("After PM");
 			throw new WorkTimeException("Date: " + date + " was submitted outside work hours.\nExpected time between 9AM - 5 PM, recieved " + date.toLocalTime());
 		}
 	}
